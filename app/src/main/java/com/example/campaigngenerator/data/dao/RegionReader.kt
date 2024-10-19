@@ -3,6 +3,9 @@ package com.example.campaigngenerator.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.campaigngenerator.data.model.Genre
+import com.example.campaigngenerator.data.model.GenreRegionMapping
+import com.example.campaigngenerator.data.model.Region
 
 @Dao
 interface RegionReader {
@@ -10,7 +13,7 @@ interface RegionReader {
         """SELECT r.name as name FROM region r
             JOIN genre_region_mapping grm ON r.id = grm.region_id
             JOIN genre g ON grm.genre_id = g.id
-            WHERE g.id = :genreUDD"""
+            WHERE g.id = :genreID"""
     )
     fun getRegionsByGenreUID(genreID: String): List<String>
 

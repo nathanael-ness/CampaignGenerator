@@ -14,6 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.campaigngenerator.ui.theme.CampaignGeneratorTheme
 
 class MainActivity : ComponentActivity() {
+
+    val db = (application as CampaignGeneratorApp).database;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
