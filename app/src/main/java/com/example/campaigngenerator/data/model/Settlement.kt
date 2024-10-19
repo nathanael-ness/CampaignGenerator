@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 @Immutable
-data class Genre(
-    @PrimaryKey val id: Int,
+data class Settlement(
+    @PrimaryKey val id: String,
     @ColumnInfo(name = "name") val name: String
 )

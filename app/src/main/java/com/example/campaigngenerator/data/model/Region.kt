@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 @Entity
 @Immutable
 data class Region(
-    @PrimaryKey val uid: Int,
+    @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String
 )

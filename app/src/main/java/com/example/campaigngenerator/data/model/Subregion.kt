@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 @Immutable
-data class Genre(
+data class Subregion(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String
 )
