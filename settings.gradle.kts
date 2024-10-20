@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Campaign Generator"
+rootProject.name = "Campaign_Generator"
 include(":app")

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.campaigngenerator"
+    namespace = "com.spiphy.campaigngenerator"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.campaigngenerator"
+        applicationId = "com.spiphy.campaigngenerator"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
