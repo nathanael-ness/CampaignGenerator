@@ -5,7 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.campaigngenerator.data.dao.RegionReader
+import com.example.campaigngenerator.data.dao.RegionDao
+import com.example.campaigngenerator.data.dao.RegionWithGenreDao
 import com.example.campaigngenerator.data.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -16,12 +17,12 @@ import kotlinx.coroutines.launch
         Region::class,
         Subregion::class,
         Settlement::class,
-        GenreRegionMapping::class
+        RegionGenre::class
     ], version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun regionReader(): RegionReader
+    abstract fun regionDao(): RegionWithGenreDao
 
     companion object {
         @Volatile
@@ -51,15 +52,16 @@ abstract class AppDatabase : RoomDatabase() {
                 super.onCreate(db)
                 INSTANCE?.let { database ->
                     scope.launch {
-                        // database.regionReader().insertGenre()
+                        populateDatabase(database.regionDao())
                     }
                 }
             }
         }
 
-        suspend fun populateDatabase(dao: RegionReader) {
-            dao.insertGenre(Genre(name = "Fantasy"))
-            dao.insertRegion(Region(name = "Forest"))
+        suspend fun populateDatabase(dao: RegionWithGenreDao) {
+            val genreId =dao.insert(Genre(name = "Fantasy"))
+            val regionId = dao.insert(Region(name = "Forest"))
+            dao.insert(RegionGenre(regionId = regionId, genreId = genreId))
         }
     }
 }

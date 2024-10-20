@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 @Entity
 @Immutable
 data class Settlement(
-    @PrimaryKey val id: String,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String
 )

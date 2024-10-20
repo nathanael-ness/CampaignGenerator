@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 @Entity
 @Immutable
 data class Establishment(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String
 )

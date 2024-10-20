@@ -4,11 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.campaigngenerator.data.model.Genre
-import com.example.campaigngenerator.data.model.GenreRegionMapping
 import com.example.campaigngenerator.data.model.Region
 
 @Dao
-interface RegionReader {
+interface RegionDao {
     @Query(
         """SELECT r.name as name FROM region r
             JOIN genre_region_mapping grm ON r.id = grm.region_id
@@ -23,7 +22,5 @@ interface RegionReader {
     @Insert
     fun insertRegion(region: Region)
 
-    @Insert
-    fun insertGenreRegionMapping(genreRegionMapping: GenreRegionMapping)
 
 }
