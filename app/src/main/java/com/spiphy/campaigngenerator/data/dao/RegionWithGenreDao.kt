@@ -4,9 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.spiphy.campaigngenerator.data.model.Genre
-import com.spiphy.campaigngenerator.data.model.GenreWithRegion
 import com.spiphy.campaigngenerator.data.model.Region
 import com.spiphy.campaigngenerator.data.model.RegionGenre
 
@@ -21,10 +19,14 @@ interface RegionWithGenreDao {
     @Insert(entity = RegionGenre::class, onConflict = OnConflictStrategy.IGNORE)
     fun insert(regenGenre: RegionGenre) : Long
 
-    @Transaction
-    @Query("""SELECT * FROM region as r
+    @Query("""SELECT * FROM genre where name = :genreName""")
+    fun getGenre(genreName: String): Genre?
+
+    @Query("""
+        SELECT r.* 
+        FROM region as r
         JOIN genre_region_mapping as grm ON r.id = grm.region_id
         JOIN genre as g ON grm.genre_id = g.id
         WHERE g.name = :genre""")
-    fun getRegions(genre: String): GenreWithRegion
+    fun getRegions(genre: String): List<Region>
 }

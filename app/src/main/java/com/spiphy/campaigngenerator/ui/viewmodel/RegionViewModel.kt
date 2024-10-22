@@ -10,7 +10,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.spiphy.campaigngenerator.CampaignGeneratorApplication
 import com.spiphy.campaigngenerator.data.model.Genre
-import com.spiphy.campaigngenerator.data.model.GenreWithRegion
 import com.spiphy.campaigngenerator.data.model.Region
 import com.spiphy.campaigngenerator.data.repository.RegionRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 sealed interface RegionUiState {
-    data class Success(val genreWithRegion: GenreWithRegion) : RegionUiState
+    data class Success(val regions: List<Region>) : RegionUiState
     object Loading : RegionUiState
     object Error : RegionUiState
 }
@@ -29,6 +28,8 @@ class RegionViewModel(private val regionRepository: RegionRepository) : ViewMode
 
     init {
         insert(region = Region(name = "Mountain"), genre = Genre(name = "Fantasy"))
+        insert(region = Region(name = "Jungle"), genre = Genre(name = "Fantasy"))
+        insert(region = Region(name = "Swamp"), genre = Genre(name = "Fantasy"))
         getRegions("Fantasy")
     }
 

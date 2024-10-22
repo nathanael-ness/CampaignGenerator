@@ -15,7 +15,11 @@ class RegionRepository(private val dao: RegionWithGenreDao) {
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(region: Region, genre: Genre) {
-        val genreId =dao.insert(genre)
+        val existingGenre = dao.getGenre(genre.name)
+        var genreId = existingGenre?.id ?: 0
+        if (existingGenre == null) {
+            genreId = dao.insert(genre)
+        }
         val regionId = dao.insert(region)
         dao.insert(RegionGenre(regionId = regionId, genreId = genreId))
     }
