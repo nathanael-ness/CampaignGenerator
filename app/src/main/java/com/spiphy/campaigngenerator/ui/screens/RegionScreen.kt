@@ -19,11 +19,9 @@ fun RegionScreen(
     when(regionUiState) {
         is RegionUiState.Error -> Greeting("Error", Modifier.padding(innerPadding))
         is RegionUiState.Loading -> Greeting("Loading", Modifier.padding(innerPadding))
-        is RegionUiState.Success -> Greeting(regionUiState.genreWithRegion.regions.firstOrNull()?.name ?: "", Modifier.padding(innerPadding))
+        is RegionUiState.Success -> Greeting(regionUiState.genreWithRegion.regions.random().name, Modifier.padding(innerPadding))
     }
 }
-
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

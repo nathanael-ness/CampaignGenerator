@@ -28,15 +28,18 @@ class RegionViewModel(private val regionRepository: RegionRepository) : ViewMode
         private set
 
     init {
+        insert(region = Region(name = "Mountain"), genre = Genre(name = "Fantasy"))
         getRegions("Fantasy")
     }
 
-    fun getRegions(genre: String) {
+    fun getRegions(genre: String = "Fantasy") {
         viewModelScope.launch{
             viewModelScope.launch() {
                 withContext(Dispatchers.IO) {
                     regionUiState = try {
-                        RegionUiState.Success(regionRepository.getRegions(genre))
+                        val genreWithRegion = regionRepository.getRegions(genre)
+                        Log.i("RegionViewModel", "genreWithRegion: $genreWithRegion")
+                        RegionUiState.Success(genreWithRegion)
                     } catch (e: Exception) {
                         Log.e("RegionViewModel", e.toString())
                         RegionUiState.Error
@@ -51,6 +54,7 @@ class RegionViewModel(private val regionRepository: RegionRepository) : ViewMode
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     regionRepository.insert(region, genre)
+                    Log.i("RegionViewModel", "inserted: ${region.name} ${genre.name}")
                     getRegions(genre.name)
                 }
             }
@@ -64,15 +68,5 @@ class RegionViewModel(private val regionRepository: RegionRepository) : ViewMode
                 RegionViewModel(application.repository)
             }
         }
-    }
-}
-
-class RegionViewModelFactory(private val regionRepository: RegionRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RegionViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return RegionViewModel(regionRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

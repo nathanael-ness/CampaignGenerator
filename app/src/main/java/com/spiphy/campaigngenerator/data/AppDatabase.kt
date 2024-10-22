@@ -1,6 +1,7 @@
 package com.spiphy.campaigngenerator.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -18,7 +19,8 @@ import kotlinx.coroutines.launch
         Subregion::class,
         Settlement::class,
         RegionGenre::class
-    ], version = 1
+    ],
+    version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -39,7 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     DATABASE_NAME
-                ).build()
+                ).setJournalMode(JournalMode.TRUNCATE).build()
                 INSTANCE = instance
                 instance
             }
@@ -59,9 +61,15 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         suspend fun populateDatabase(dao: RegionWithGenreDao) {
-            val genreId =dao.insert(Genre(name = "Fantasy"))
-            val regionId = dao.insert(Region(name = "Forest"))
-            dao.insert(RegionGenre(regionId = regionId, genreId = genreId))
+            val genreId = dao.insert(Genre(name = "Fantasy"))
+            val regionId = dao.insert(Region(name = "Mountain"))
+            val rg1 = dao.insert(RegionGenre(regionId = regionId, genreId = genreId))
+            val r2 = dao.insert(Region(name = "River"))
+            val rg2 = dao.insert(RegionGenre(regionId = r2, genreId = genreId))
+            Log.i("populateDatabase", "rgs: $rg1 $rg2")
+            Log.i("populateDatabase", "regionId: $regionId regionId2: $r2 genreId: $genreId")
+
+
         }
     }
 }

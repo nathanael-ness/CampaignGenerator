@@ -1,0 +1,4 @@
+package com.spiphy.campaign_generator.data.repository
+
+class RegionRepository {
+}

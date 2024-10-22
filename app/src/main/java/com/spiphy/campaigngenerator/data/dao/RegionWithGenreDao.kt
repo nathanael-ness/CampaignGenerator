@@ -12,13 +12,13 @@ import com.spiphy.campaigngenerator.data.model.RegionGenre
 
 @Dao
 interface RegionWithGenreDao {
-    @Insert
+    @Insert(entity = Genre::class, onConflict = OnConflictStrategy.IGNORE)
     fun insert(genre: Genre) : Long
 
-    @Insert
+    @Insert(entity = Region::class, onConflict = OnConflictStrategy.IGNORE)
     fun insert(region: Region) : Long
 
-    @Insert
+    @Insert(entity = RegionGenre::class, onConflict = OnConflictStrategy.IGNORE)
     fun insert(regenGenre: RegionGenre) : Long
 
     @Transaction

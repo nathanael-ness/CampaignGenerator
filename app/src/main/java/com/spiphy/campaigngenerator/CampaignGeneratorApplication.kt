@@ -16,5 +16,10 @@ class CampaignGeneratorApplication : Application() {
         super.onCreate()
     }
 
+    override fun onTerminate() {
+        super.onTerminate()
+        database.close()
+    }
+
 
 }
